@@ -1,0 +1,162 @@
+.Node-Component, .Root {
+  margin-top: 5px;
+  text-align: center;
+  width: auto;
+  height: auto; }
+
+.Root {
+  margin-top: 50px;
+  background-color: none; }
+  .Root:before, .Root:after {
+    display: none; }
+
+.Node {
+  border: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.InputContainer {
+  width: auto; }
+
+.InputBar, .EmptyInputBar {
+  border: hidden;
+  border-radius: 10px;
+  width: 100%;
+  outline: none;
+  height: 42px;
+  color: #282828;
+  font-size: 14px;
+  text-align: center;
+  background-color: inherit;
+  background-image: none;
+  -ms-transition: all .1s ease-in-out;
+  -webkit-transition: all .1s ease-in-out;
+  -moz-transition: all .1s ease-in-out;
+  -o-transition: all .1s ease-in-out;
+  transition: all .1s ease-in-out; }
+
+.Connector {
+  position: relative;
+  top: 10px;
+  background: white;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  -ms-transition: opacity .3s;
+  -webkit-transition: opacity .3s;
+  -moz-transition: opacity .3s;
+  -o-transition: opacity .3s;
+  transition: opacity .3s;
+  border: 1px solid #bcbcbc;
+  border-radius: 10px;
+  height: 30px;
+  padding: 0 3px; }
+
+.Button {
+  cursor: pointer;
+  border: hidden;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.DeleteButtonIcon, .ButtonIcon {
+  background-repeat: no-repeat;
+  margin-right: 0;
+  background-size: contain;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  opacity: .75;
+  vertical-align: middle; }
+  .DeleteButtonIcon:hover, .ButtonIcon:hover {
+    opacity: 1; }
+
+.ButtonIcon {
+  margin-right: 2px;
+  height: 16px;
+  width: 16px; }
+
+li {
+  position: relative; }
+  li:only-child {
+    margin-top: -20px; }
+
+/*We will use ::before and ::after to draw the connectors*/
+li::before, li::after {
+  content: '';
+  position: absolute;
+  top: 0px;
+  right: 50%;
+  border-top: 1px solid #282828;
+  width: 50%;
+  height: 8px; }
+
+li::after {
+  right: auto;
+  left: 50%;
+  border-left: 1px solid #282828; }
+
+/*Remove left connector from first child and
+right connector from last child*/
+li:first-child::before, li:last-child::after {
+  border: 0 none; }
+
+/*Adding back the vertical connector to the last nodes*/
+li:last-child::before {
+  border-right: 1px solid #282828;
+  border-radius: 0 2px 0 0;
+  -webkit-border-radius: 0 2px 0 0;
+  -moz-border-radius: 0 2px 0 0; }
+
+li:first-child::after {
+  border-radius: 2px 0 0 0;
+  -webkit-border-radius: 2px 0 0 0;
+  -moz-border-radius: 2px 0 0 0; }
+
+/*We need to remove left-right connectors from elements without
+any siblings*/
+li:only-child::after, li:only-child::before {
+  border-radius: 0;
+  position: absolute;
+  top: -4px;
+  right: 50%;
+  height: 14px;
+  transform: rotate(0deg); }
+
+ul {
+  position: relative;
+  list-style-type: none;
+  margin: 0 auto;
+  padding: 0; }
+
+.Children {
+  border: hidden;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: center;
+  position: relative;
+  padding: 0px 0px 0px 0px; }
+  .Children:after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: 50%;
+    width: 0;
+    height: 10px;
+    right: auto;
+    left: 50%;
+    border-left: 1px solid #282828; }
+
+.Child {
+  border: hidden;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: center;
+  position: relative;
+  padding: 14px 0px 0px 0px; }

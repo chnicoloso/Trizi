@@ -1,0 +1,89 @@
+.Main {
+  height: 100%;
+}
+
+.Container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  font-family: Helvetica;
+}
+
+.Header {
+  position: relative;
+  z-index: 10;
+  background-color: white;
+  height: 70px;
+  width: 100%;
+  -moz-box-shadow: 0 0 8px 0 #bcbcbc;
+  -webkit-box-shadow: 0 0 8px 0 #bcbcbc;
+  box-shadow: 0 0 8px 0 #bcbcbc;
+}
+
+.Content {
+  display: flex;
+  flex-direction: row;
+  background-color: #FBFBFB;
+  height: 100%;
+  overflow: auto;
+}
+
+.Toolbar, .Infobar {
+  opacity: 1;
+  align-self: flex-end;
+  -ms-transition: width .3s, height .3s;
+  -webkit-transition: width .3s, height .3s;
+  -moz-transition: width .3s, height .3s;
+  -o-transition: width .3s, height .3s;
+  transition: width .3s, height .3s;
+  border-radius: 5px;
+  position: fixed;
+  /* Stay in place */
+  z-index: 10;
+  /* Stay on top */
+  -moz-box-shadow: 0 0 8px 0 #bcbcbc;
+  -webkit-box-shadow: 0 0 8px 0 #bcbcbc;
+  box-shadow: 0 0 8px 0 #bcbcbc;
+}
+
+.Toolbar {
+  top: 20%;
+  right: 0;
+}
+
+.Infobar {
+  position: fixed;
+  bottom: 0%;
+  left: 1%;
+  width: 98%;
+  height: 124px;
+  width: 98%;
+}
+
+.Canvas {
+  position: fixed;
+  top: 50px;
+  background-color: yellow;
+}
+
+.Tree {
+  background-color: none;
+  width: auto;
+  min-width: 100%;
+  height: 100%;
+}
+
+.Footer {
+  background-color: black;
+  height: 30px;
+  width: 100%;
+}
+
+.Box {
+  margin: 0 auto;
+  width: 500px;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+}

@@ -1,0 +1,39 @@
+.InfoBar-Component {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  padding: 10px 15px 15px 15px;
+  margin-left: 0px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  justify-content: flex-end;
+}
+
+.InfoLabel {
+  width: auto;
+  padding-top: 10px;
+}
+
+.Tutorial {
+  position: absolute;
+  top: 15px;
+  left: 43%;
+}
+
+.AuthorAndLicence {
+  display: flex;
+  flex-direction: column;
+}
+
+.Image {
+  position: absolute;
+  right: 30px;
+  bottom: 25px;
+}
+
+.Authorship {
+
+}
