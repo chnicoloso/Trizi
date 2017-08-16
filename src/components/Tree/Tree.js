@@ -23,7 +23,8 @@ export default class Tree extends Component {
         this.updateBracketNotation = this.updateBracketNotation.bind(this);
         this.currentId = 1;
         this.state = {
-          root : null
+          root : null,
+          switchingRoot: false
         }
     }
 
@@ -63,11 +64,13 @@ export default class Tree extends Component {
     *   Updates the new root for this tree.
     */
     updateRoot(newRoot) {
+      // console.log('updating root');
       if (newRoot) { // Change Root.
-        this.setState({root: newRoot});
+        this.setState({root: newRoot, switchingRoot: true});
       } else { // Just refresh.
           this.setState((prevState) => ({
-            root: prevState.root
+            root: prevState.root,
+            switchingRoot: false
           }));
       }
       this.updateBracketNotation();
@@ -100,7 +103,7 @@ export default class Tree extends Component {
         if (childParent) {
             this.switchParenthood(child, childParent, newNode);
         }
-        else{ //this used to be the root, switch them.
+        else{ //this used to be the root, switch it.
             this.addParenthood(newNode, this.state.root);
             this.updateRoot(newNode);
         }
@@ -122,7 +125,9 @@ export default class Tree extends Component {
     addParenthood(parentNode, childNode) {
         parentNode.children.push(childNode);
         childNode.parent = parentNode;
-        this.updateRoot();
+        if (childNode !== this.state.root) {
+          this.updateRoot();
+        }
     }
 
     /*
@@ -130,7 +135,7 @@ export default class Tree extends Component {
     */
     removeParenthood(parentNode, childNode) {
         let index = parentNode.children.indexOf(childNode);
-        parentNode.children.splice(index);
+        parentNode.children.splice(index, 1);
         this.updateRoot();
     }
 
@@ -138,9 +143,10 @@ export default class Tree extends Component {
         let parent = node.parent;
         // delete node and re-atach children.
         if (parent) {
-            let child = node.children.get(0);
-            this.switchParenthood(child, node, parent);
-            this.removeParenthood(parent, node);
+            node.children.forEach( child => {
+              this.switchParenthood(child, node, parent);
+              this.removeParenthood(parent, node);
+            });
         }
         else {
             // delete all but the root.

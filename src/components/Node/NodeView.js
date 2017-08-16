@@ -23,6 +23,13 @@ export default class NodeView extends Component {
           pressedDeleteTwice: false
         };
     }
+    componentWillReceiveProps(nextProps) {
+      if (nextProps.item.nodeId === nextProps.root.nodeId) {
+        let inputBox = document.getElementById(this.props.item.nodeId + "/inputBox");
+        inputBox.value = nextProps.item.text;
+      }
+    }
+
     /*
     *   Focus on Node as soon as it's attached to the DOM.
     */
@@ -33,13 +40,13 @@ export default class NodeView extends Component {
         this.focusOnMe();
     }
 
-    componentWillUpdate() {
-    }
-
     /*
     *   Swiches focu back on previous Node as soon as this object is deleted from the DOM.
     */
     componentWillUnMount() {
+      console.log('unmounting ' + this.props.item.text);
+        let inputBox = document.getElementById(this.props.item.nodeId + "/inputBox");
+        inputBox.value = '';
         this.props.onFocusOnSibling(this.props.item.nodeId, "left");
     }
 
@@ -200,11 +207,11 @@ export default class NodeView extends Component {
     listChildren() {
       let nodes = [];
       let root = this.props.root;
-      this.props.item.children.forEach((child, key) => {
+      this.props.item.children.forEach( child => {
         nodes.push(<li key={ child.nodeId }>
           <NodeView
-            item={ child }
             root={ root }
+            item={ child }
             onUpdateBracketNotation={ this.props.onUpdateBracketNotation }
             onFocusOnNode={ this.props.onFocusOnNode }
             onRemoveNode={ this.props.onRemoveNode }
