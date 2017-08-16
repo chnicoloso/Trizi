@@ -24,7 +24,7 @@ export default class MainView extends Component {
         showInfo : false,
         colorIndex : 0,
         drawingColor : 'black',
-        bracketText: ''
+        bracketText: '[ ]'
       };
       this.colors = ['black','#4286f4', '#f4aa42', '#41f483', '#ff2700', '#e64aa9'];
       this.togglePanel = this.togglePanel.bind(this);

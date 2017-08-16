@@ -8,15 +8,11 @@ export default class NodeView extends Component {
     */
     constructor() {
         super();
-        this.originalText = '';
-        this.formattedText = '';
         this.focusOnMe = this.focusOnMe.bind(this);
         this.onKeyUp = this.onKeyUp.bind(this);
         this.formatText = this.formatText.bind(this);
         this.getSize = this.getSize.bind(this);
         this.childrenClass = this.childrenClass.bind(this);
-        this.inputClass = this.inputClass.bind(this);
-        this.edit = this.edit.bind(this);
         this.switchNodeFormatting = this.switchNodeFormatting.bind(this);
         this.setOnHover = this.setOnHover.bind(this);
         this.listChildren = this.listChildren.bind(this);
@@ -31,8 +27,13 @@ export default class NodeView extends Component {
     *   Focus on Node as soon as it's attached to the DOM.
     */
     componentDidMount() {
+        let inputBox = document.getElementById(this.props.item.nodeId + "/inputBox");
+        let text = this.props.item.text;
+        inputBox.value = text;
         this.focusOnMe();
-        document.getElementById(this.props.item.nodeId + "/inputBox").value = this.props.item.text;
+    }
+
+    componentWillUpdate() {
     }
 
     /*
@@ -120,8 +121,8 @@ export default class NodeView extends Component {
     *   Return the size of the input box.
     */
     getSize() {
-        if (this.state.originalText) {
-            return (this.state.originalText.length+3)*7;
+        if (this.props.item.text) {
+            return (this.props.item.text.length+3)*7;
         }
         return 14;
     }
@@ -167,18 +168,6 @@ export default class NodeView extends Component {
     childrenClass(childrenAmount) {
         if (childrenAmount == 1) return 'Child';
         return 'Children';
-    }
-
-    /*
-    *   Return wether this should take the styles of one className or the other.
-    */
-    inputClass() {
-        if (!this.props.item.text) return 'EmptyInputBar';
-        return 'InputBar';
-    }
-
-    edit() {
-        this.props.onFocusOnNode(this.props.item.nodeId);
     }
 
     /*
@@ -232,8 +221,7 @@ export default class NodeView extends Component {
       let className;
       if (this.props.item === this.props.root) {
         className = 'Root';
-        // console.log(className);
-      } else{
+      } else {
         className = 'Component';
       }
       return (<g>
@@ -247,7 +235,6 @@ export default class NodeView extends Component {
                      onMouseLeave={ () => this.setOnHover(false) }>
 
                     <div className={ 'Button' } onClick={ () => this.removeSelfAndDescendants() }>
-                        {/* <img className={ 'buttonIcon } src="https://png.icons8.com/cancel/color/96"/> */}
                         <img className={ 'DeleteButtonIcon' } src={ require("../../res/icons8-Cancel-96.png") } href="https://icons8.com"/>
                     </div>
 
@@ -261,7 +248,7 @@ export default class NodeView extends Component {
 
                 </div>
                 <input id={ this.props.item.nodeId + "/inputBox" }
-                    className={ this.inputClass() }
+                    className={ 'InputBar' }
                     type="text"
                     style={ { width: this.getSize(), marginTop: this.state.onHover || (this.props.root.children.length === 0 ) ? '5px' : '-30px'}}
                     onKeyUp={ (ev) => this.onKeyUp(ev) }

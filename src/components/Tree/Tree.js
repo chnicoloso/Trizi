@@ -22,21 +22,9 @@ export default class Tree extends Component {
         this.moveItems = this.moveItems.bind(this);
         this.updateBracketNotation = this.updateBracketNotation.bind(this);
         this.currentId = 1;
-        // this.state = {
-        //   root : null,
-        //   levels : [],
-        //   bracketText : '',
-        //   nodes : []
-        // };
         this.state = {
           root : null
         }
-        this.levels = [],
-        this.bracketText = '[ ]',
-        this.nodes = []
-        this.text = '';
-        this.words = '';
-        this.tree = {};
     }
 
     componentDidMount() {
