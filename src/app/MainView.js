@@ -34,12 +34,6 @@ export default class MainView extends Component {
       this.clearDrawing = this.clearDrawing.bind(this);
       this.save = this.save.bind(this);
       this.updateBracketNotation = this.updateBracketNotation.bind(this);
-      // document.body.onload = function(){
-      //     // if(document.readyState == 'complete'){
-      //     //     // focus on text input bar.
-      //     //     document.getElementsByClassName('TextBar--inputBar--i8cin')[0].focus();
-      //     // }
-      // }
   }
 
   toggleDrawingMode(){
@@ -53,14 +47,14 @@ export default class MainView extends Component {
   }
 
   switchDrawingColor(){
-    this.setState((prevState) => ({
-      colorIndex: prevState.colorIndex + 1 }));
-    if(this.state.index === this.colors.length){
-      this.setState((prevState) => ({
-        colorIndex: 0 }));
+    let currentColorIndex = this.state.colorIndex + 1;
+    if (currentColorIndex === this.colors.length) {
+      currentColorIndex = 0;
     }
+    let currentColor = this.colors[currentColorIndex];
     this.setState((prevState) => ({
-      drawingColor: this.colors[this.state.colorIndex] }));
+      colorIndex: currentColorIndex,
+      drawingColor: currentColor }));
     }
 
   clearDrawing() {
