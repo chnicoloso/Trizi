@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-// import domtoimage from "dom-to-image";
-// import { saveAs } from 'file-saver';
+import domtoimage from 'dom-to-image';
+import { saveAs } from 'file-saver';
 import logo from './logo.svg';
 import './MainView.css';
 

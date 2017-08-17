@@ -10,9 +10,10 @@
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   justify-content: flex-end;
+  font-family: 'Avenir Next',sans-serif;
 }
 
-.InfoLabel {
+.InfoLabel, .InfoLabelLicence {
   width: auto;
   padding-top: 10px;
 }

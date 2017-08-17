@@ -27,10 +27,10 @@ export default class ToolbarView extends Component {
     }
 
     save() {
-      // this.setState({hoveringOver: true});
-      // this.props.onSave().then(() => {
-      //   this.setState({hoveringOver: false});
-      // });
+      this.setState({hoveringOver: true});
+      this.props.onSave().then(() => {
+        this.setState({hoveringOver: false});
+      });
     }
 
     toggleDrawingMode() {

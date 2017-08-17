@@ -24,6 +24,7 @@
 }
 
 .BracketTextContainer {
+  font-family: 'Avenir Next',sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -22,8 +22,8 @@ export default class InfoBar extends Component {
                         </div>
 
                         <div className='AuthorAndLicence'>
-                            <a className='InfoLabel'> Made with love by Christian Lista Nicoloso </a>
-                            <a className='InfoLabel'> Copyright </a>
+                            <a className='InfoLabel'> Made by Christian Lista Nicoloso </a>
+                            {/* <a className='InfoLabel'> GNU General Public License v3.0 </a> */}
                         </div>
 
                         <div className='Image'>
