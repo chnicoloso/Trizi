@@ -7,6 +7,7 @@ import './MainView.css';
 import HeaderView from '../components/Header/HeaderView';
 import ToolbarView from '../components/Toolbar/ToolbarView';
 import InfoBar from '../components/InfoBar/InfoBar';
+import Canvas from '../components/Canvas/Canvas';
 import Tree from '../components/Tree/Tree';
 
 
@@ -83,6 +84,11 @@ export default class MainView extends Component {
     // });
   }
 
+  updateSize() {
+    this.contentWidth = document.getElementById('content').offsetWidth;
+    this.contentHeight = document.getElementById('content').offsetHeight;
+  }
+
   render() {
     return (<div className={ 'Main' }>
            <div className={ 'Container' }>
@@ -91,11 +97,14 @@ export default class MainView extends Component {
                 <HeaderView onToggle={ this.togglePanel } panelOpen={ this.state.showPanel } bracketText={ this.state.bracketText }/>
              </div>
 
-             <div className={ 'Content' }>
+             <div id={ 'content' } className={ 'Content' }>
                <div className={ 'Tree' }>
                   <Tree onUpdateBracketNotation={ this.updateBracketNotation }/>
                </div>
-               {/* <Canvas /> */}
+               <Canvas width={ document.getElementById('content') ? document.getElementById('content').offsetWidth : 0 }
+                       height={ document.getElementById('content') ? document.getElementById('content').offsetHeight : 0 }
+                       drawing={ this.state.drawing }
+                       drawingColor={ this.state.drawingColor }/>
              </div>
 
           </div>
@@ -107,7 +116,7 @@ export default class MainView extends Component {
                onToggleDrawing={ this.toggleDrawingMode }
                onToggleInfo={ this.toggleInfoPanel }
                switchColor={ this.switchDrawingColor }
-               clearDrawing={ this.clearDrawing } />
+               onClearDrawing={ this.clearDrawing } />
           </div>
 
           <div className={ 'Infobar' } style={ {height:this.state.showPanel && this.state.showInfo ? '124px' : '0px'} } >

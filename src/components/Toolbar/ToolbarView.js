@@ -17,6 +17,7 @@ export default class ToolbarView extends Component {
       this.switchDrawingColor =  this.switchDrawingColor.bind(this);
       this.onHover = this.onHover.bind(this);
       this.switchDrawingColor = this.switchDrawingColor.bind(this);
+      this.clearDrawing = this.clearDrawing.bind(this);
       this.hoveringOver = false;
       this.buttonText = '';
     }
@@ -44,7 +45,7 @@ export default class ToolbarView extends Component {
     }
 
     clearDrawing() {
-      this.props.clearDrawing();
+      this.props.onClearDrawing();
     }
 
     onHover(hovering, string) {
@@ -68,8 +69,8 @@ export default class ToolbarView extends Component {
       let clearIcon = require('../../res/icons8-EmptyTrashFilled-50.png');
       const downloadStyle = { background:  this.props.state.isSaving ? '#16a085' : 'none', backgroundColor:'#16a085'};
       const drawStyle = { backgroundColor: '#FFC466', opacity: !this.props.state.drawing ? '1' : '.5' };
-      const clearStyle = { top:'64%', marginTop:this.props.state.drawing ? '15px' : '0px', height:this.props.state.drawing ? '26px' : '0px' , backgroundColor:'#DB5461' };
-      const colorStyle = { marginTop:this.props.state.drawing ? '15px' : '0px', height:this.props.state.drawing ? '15px' : '0px', borderRadius:'26px', backgroundColor:this.props.state.drawingColor};
+      const clearStyle = {marginTop:this.props.state.drawing ? '15px' : '0px', height:this.props.state.drawing ? '26px' : '0px' , backgroundColor:'#DB5461' };
+      const colorStyle = { marginTop:this.props.state.drawing ? '15px' : '0px', height:this.props.state.drawing ? '26px' : '0px', borderRadius:'26px', backgroundColor:this.props.state.drawingColor};
       const settingsStyle = { top: '41%', backgroundColor: '#DB5461'};
       const infoStyle = { top:'54%', opacity: this.props.state.showInfo ? '1' : '.8', backgroundColor: '#2A617F' };
 
