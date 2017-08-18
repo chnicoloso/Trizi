@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-// import domtoimage from 'dom-to-image';
-// import { saveAs } from 'file-saver';
+import domtoimage from 'dom-to-image';
+import { saveAs } from 'file-saver';
 import logo from './logo.svg';
 import './MainView.css';
 
@@ -75,13 +75,14 @@ export default class MainView extends Component {
 
   save() {
     var self = this;
-    // this.setState({isSaving: true});
+    this.setState({isSaving: true});
     var tree = document.getElementById('content-to-print');
-    // domtoimage.toBlob(tree , { bgcolor:'white' })
-    // .then(function (blob) {
-        // saveAs(blob, 'my-tree.png');
-        // self.setState({isSaving: false});
-    // });
+    domtoimage.toBlob(tree , { bgcolor:'white' })
+    .then(function (blob) {
+        saveAs(blob, 'my-tree.png');
+    });
+    self.setState({isSaving: false});
+
   }
 
   updateSize() {

@@ -12,6 +12,7 @@ export default class ToolbarView extends Component {
         hoveringOver : false,
         buttonText : ''
       }
+      this.save = this.save.bind(this);
       this.toggleInfoPanel = this.toggleInfoPanel.bind(this);
       this.toggleDrawingMode = this.toggleDrawingMode.bind(this);
       this.switchDrawingColor =  this.switchDrawingColor.bind(this);
@@ -28,9 +29,8 @@ export default class ToolbarView extends Component {
 
     save() {
       this.setState({hoveringOver: true});
-      this.props.onSave().then(() => {
-        this.setState({hoveringOver: false});
-      });
+      this.props.onSave();
+      this.setState({hoveringOver: false});
     }
 
     toggleDrawingMode() {
