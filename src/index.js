@@ -6,4 +6,4 @@ import MainView from './app/MainView';
 // import appReducer from './reducers/appReducer';
 
 ReactDOM.render( <MainView />, document.getElementById('root'));
-registerServiceWorker();
+// registerServiceWorker();
