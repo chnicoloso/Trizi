@@ -37,6 +37,11 @@
   height: 80px;
   background-image: url('../../res/fork_light.svg');
   background-repeat: no-repeat;
+  -ms-transition: background-image .3s;
+  -webkit-transition: background-image .3s;
+  -moz-transition: background-image .3s;
+  -o-transition: background-image .3s;
+  transition: background-image .3s;
 }
 
 .ForkImage:hover {
