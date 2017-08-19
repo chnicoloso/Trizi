@@ -71,7 +71,7 @@ export default class ToolbarView extends Component {
       const drawStyle = { backgroundColor: '#FFC466', opacity: !this.props.state.drawing ? '1' : '.5' };
       const clearStyle = {marginTop:this.props.state.drawing ? '15px' : '0px', height:this.props.state.drawing ? '26px' : '0px' , backgroundColor:'#DB5461' };
       const colorStyle = { marginTop:this.props.state.drawing ? '15px' : '0px', height:this.props.state.drawing ? '26px' : '0px', borderRadius:'26px', backgroundColor:this.props.state.drawingColor};
-      const settingsStyle = { top: '41%', backgroundColor: '#DB5461'};
+      const settingsStyle = { top: '41%', backgroundColor: '#DB5461', opacity: '.3'};
       const infoStyle = { top:'54%', opacity: this.props.state.showInfo ? '1' : '.8', backgroundColor: '#2A617F' };
 
       return (<g>

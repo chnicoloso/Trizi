@@ -23,13 +23,11 @@ export default class InfoBar extends Component {
                     <div className='InfoBar-Component'>
 
                         <div className='Tutorial'>
-                            <a className='InfoLabel'> Watch Tutorial </a>
+                            <a className='InfoLabel'> Watch Tutorial</a>
                         </div>
 
                         <div className='Fork' onClick={ this.takeToGithub }>
                             <div className='ForkImage'/>
-                            {/* <a className='InfoLabel'> Fork me on Github </a> */}
-                            {/* <a className='InfoLabel'> GNU General Public License v3.0 </a> */}
                         </div>
 
                         <div className='Image'>
