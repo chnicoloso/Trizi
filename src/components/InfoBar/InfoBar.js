@@ -7,6 +7,11 @@ export default class InfoBar extends Component {
         super();
     }
 
+    takeToGithub() {
+      var url = "https://github.com/chnicoloso/Trizi";
+      var win = window.open(url, '_blank');
+    }
+
     render(){
         let saveIcon = require('../../res/icons8-Download-104.png');
         let waitIcon = require('../../res/progress.gif');
@@ -21,8 +26,9 @@ export default class InfoBar extends Component {
                             <a className='InfoLabel'> Watch Tutorial </a>
                         </div>
 
-                        <div className='AuthorAndLicence'>
-                            <a className='InfoLabel'> Made by Christian Lista Nicoloso </a>
+                        <div className='Fork' onClick={ this.takeToGithub }>
+                            <div className='ForkImage'/>
+                            {/* <a className='InfoLabel'> Fork me on Github </a> */}
                             {/* <a className='InfoLabel'> GNU General Public License v3.0 </a> */}
                         </div>
 

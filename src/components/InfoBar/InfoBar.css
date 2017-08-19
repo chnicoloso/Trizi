@@ -24,9 +24,23 @@
   left: 43%;
 }
 
-.AuthorAndLicence {
-  display: flex;
-  flex-direction: column;
+.Fork {
+  cursor: pointer;
+  top: -29px;
+  left: -15px;
+  height: 80px;
+  width: 80px;
+}
+
+.ForkImage {
+  width: 80px;
+  height: 80px;
+  background-image: url('../../res/fork_light.svg');
+  background-repeat: no-repeat;
+}
+
+.ForkImage:hover {
+  background-image: url('../../res/fork_dark.svg');
 }
 
 .Image {
