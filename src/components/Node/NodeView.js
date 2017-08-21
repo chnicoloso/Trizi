@@ -70,7 +70,7 @@ export default class NodeView extends Component {
       }
       else {
         // focus on right-most left cousin.
-        if (parent && parent.parent) {
+        if (parent.parent) {
           let parentIndex = parent.parent.children.indexOf(parent);
           if (parentIndex >= 1) {
             let leftUncle = parent.parent.children[parentIndex-1];
@@ -95,7 +95,10 @@ export default class NodeView extends Component {
       }
       else{
         // focus on left-most right cousin.
-        if (parent && parent.parent) {
+        if (parent.parent) {
+          while(parent.children) {
+
+          }
           let parentIndex = parent.parent.children.indexOf(parent);
           if (parentIndex >= 0 && parentIndex < parent.parent.children.length-1) {
             let rightUncle = parent.parent.children[parentIndex+1];
@@ -122,7 +125,7 @@ export default class NodeView extends Component {
         let siblings = parent ? parent.children : [];
         let currentNodeIndex = siblings.indexOf(currentNode);
         let nodeToFocus;
-        // if press space, create a new noce.
+        // if press enter, create a new node.
         if (code === 13) {
             this.addChild();
         }
@@ -168,9 +171,9 @@ export default class NodeView extends Component {
             this.props.onFocusOnNode(nodeToFocus.nodeId);
           }
         }
-        if (code === 9 ) {
-            this.addSibling();
-        }
+        // if (code === 9 ) {
+        //     this.addSibling();
+        // }
         if (code === 8 && !this.state.originalText) {
             if(this.state.pressedDeleteTwice) {
                 this.removeSelfAndDescendants();
