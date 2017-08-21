@@ -9,6 +9,10 @@ export default class NodeView extends Component {
     constructor() {
         super();
         this.focusOnMe = this.focusOnMe.bind(this);
+        this.focusLeft = this.focusLeft.bind(this);
+        this.focusRight = this.focusRight.bind(this);
+        // this.focusDown = this.focusDown.bind(this);
+        // this.focusUp = this.focusUp.bind(this);
         this.onKeyUp = this.onKeyUp.bind(this);
         this.formatText = this.formatText.bind(this);
         this.getSize = this.getSize.bind(this);
@@ -44,7 +48,6 @@ export default class NodeView extends Component {
     *   Swiches focu back on previous Node as soon as this object is deleted from the DOM.
     */
     componentWillUnMount() {
-      console.log('unmounting ' + this.props.item.text);
         let inputBox = document.getElementById(this.props.item.nodeId + "/inputBox");
         inputBox.value = '';
         this.props.onFocusOnSibling(this.props.item.nodeId, "left");
@@ -58,21 +61,117 @@ export default class NodeView extends Component {
     }
 
     /*
+     * Focus on node on the left.
+     */
+    focusLeft(currentNodeIndex, parent, siblings) {
+      if (currentNodeIndex - 1 >= 0) {
+        let nodeToFocus = siblings[currentNodeIndex-1];
+        this.props.onFocusOnNode(nodeToFocus.nodeId);
+      }
+      else {
+        // focus on right-most left cousin.
+        if (parent && parent.parent) {
+          let parentIndex = parent.parent.children.indexOf(parent);
+          if (parentIndex >= 1) {
+            let leftUncle = parent.parent.children[parentIndex-1];
+            let leftCousins = leftUncle.children;
+            let rightMostLeftCousin = leftCousins ? leftCousins[leftCousins.length-1] : null;
+            if (rightMostLeftCousin) {
+              this.props.onFocusOnNode(rightMostLeftCousin.nodeId);
+            }
+
+          }
+        }
+      }
+    }
+
+    /*
+     * Focus on node on the right.
+     */
+    focusRight(currentNodeIndex, parent, siblings) {
+      if (currentNodeIndex + 1 < siblings.length) {
+        let nodeToFocus = siblings[currentNodeIndex+1];
+        this.props.onFocusOnNode(nodeToFocus.nodeId);
+      }
+      else{
+        // focus on left-most right cousin.
+        if (parent && parent.parent) {
+          let parentIndex = parent.parent.children.indexOf(parent);
+          if (parentIndex >= 0 && parentIndex < parent.parent.children.length-1) {
+            let rightUncle = parent.parent.children[parentIndex+1];
+            let rightCousins = rightUncle.children;
+            let leftMostRightCousin = rightCousins ? rightCousins[0] : null;
+            if (leftMostRightCousin) {
+              this.props.onFocusOnNode(leftMostRightCousin.nodeId);
+            }
+
+          }
+        }
+      }
+    }
+
+    /*
      * Registers a new entered character.
      */
     onKeyUp(ev) {
-        // ev.stopImmediatePropagation();
+        ev.nativeEvent.stopImmediatePropagation();
         ev.preventDefault();
-        var code = ev.keyCode;
+        let code = ev.keyCode;
+        let currentNode = this.props.item;
+        let parent = currentNode.parent;
+        let siblings = parent ? parent.children : [];
+        let currentNodeIndex = siblings.indexOf(currentNode);
+        let nodeToFocus;
         // if press space, create a new noce.
-        if (code == 13) {
+        if (code === 13) {
             this.addChild();
         }
-        // TODO if press tab, add a new sibling.
-        if (code == 9 ) {
+        if (code === 39) {
+          // focus on right sibling.
+          if (parent) {
+            this.focusRight(currentNodeIndex, parent, siblings);
+          }
+          else { // Root. Focus on left child.
+            let children = currentNode.children;
+            if (children) {
+              let nodeToFocus = children[children.length-1];
+              this.props.onFocusOnNode(nodeToFocus.nodeId)
+            }
+          }
+        }
+        if (code === 37) {
+          // focus on left sibling.
+          if (parent) {
+            this.focusLeft(currentNodeIndex, parent, siblings);
+          }
+          else { // Root. Focus on left child.
+            let children = currentNode.children;
+            if (children) {
+              let nodeToFocus = children[0];
+              this.props.onFocusOnNode(nodeToFocus.nodeId)
+            }
+
+          }
+
+        }
+        if (code === 38) {
+          // focus on parent.
+          if (parent) {
+            this.props.onFocusOnNode(parent.nodeId);
+          }
+        }
+        if (code === 40) {
+          // focus on child.
+          let children = currentNode.children;
+          if (children.length >= 1) {
+            nodeToFocus = children[Math.floor(children.length/2)];
+            this.props.onFocusOnNode(nodeToFocus.nodeId);
+          }
+        }
+        if (code === 9 ) {
             this.addSibling();
         }
-        if (code == 8 && !this.state.originalText) {
+        if (code === 8 && !this.state.originalText) {
             if(this.state.pressedDeleteTwice) {
                 this.removeSelfAndDescendants();
             }
@@ -83,9 +182,9 @@ export default class NodeView extends Component {
         else{
             this.setState({pressedDeleteTwice:false})
         }
-        // this.props.item.text += ev.char;
-        let text = document.getElementById(this.props.item.nodeId + "/inputBox").value;
-        this.props.item.text = text;
+        // currentNode.text += ev.char;
+        let text = document.getElementById(currentNode.nodeId + "/inputBox").value;
+        currentNode.text = text;
         this.setState({
           originalText: text,
           formatText: this.formatText(text)
