@@ -96,9 +96,6 @@ export default class NodeView extends Component {
       else{
         // focus on left-most right cousin.
         if (parent.parent) {
-          while(parent.children) {
-
-          }
           let parentIndex = parent.parent.children.indexOf(parent);
           if (parentIndex >= 0 && parentIndex < parent.parent.children.length-1) {
             let rightUncle = parent.parent.children[parentIndex+1];
@@ -134,9 +131,9 @@ export default class NodeView extends Component {
           if (parent) {
             this.focusRight(currentNodeIndex, parent, siblings);
           }
-          else { // Root. Focus on left child.
+          else { // Root. Focus on right child.
             let children = currentNode.children;
-            if (children) {
+            if (children.length >= 1) {
               let nodeToFocus = children[children.length-1];
               this.props.onFocusOnNode(nodeToFocus.nodeId)
             }
@@ -149,13 +146,11 @@ export default class NodeView extends Component {
           }
           else { // Root. Focus on left child.
             let children = currentNode.children;
-            if (children) {
+            if (children.length >= 1) {
               let nodeToFocus = children[0];
               this.props.onFocusOnNode(nodeToFocus.nodeId)
             }
-
           }
-
         }
         if (code === 38) {
           // focus on parent.
