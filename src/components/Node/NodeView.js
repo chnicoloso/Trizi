@@ -24,7 +24,9 @@ export default class NodeView extends Component {
           onHover: false,
           originalText: '',
           formatText: '',
-          pressedDeleteTwice: false
+          pressedDeleteTwice: false,
+          pressedLeftTwice: false,
+          pressedRightTwice: false
         };
     }
     componentWillReceiveProps(nextProps) {
@@ -110,6 +112,42 @@ export default class NodeView extends Component {
       }
     }
 
+    handlePressedLeft(currentNode, currentNodeIndex, parent, siblings) {
+      if (this.state.pressedLeftTwice) {
+        // focus on left sibling.
+        if (parent) {
+          this.focusLeft(currentNodeIndex, parent, siblings);
+        }
+        else { // Root. Focus on left child.
+          let children = currentNode.children;
+          if (children.length >= 1) {
+            let nodeToFocus = children[0];
+            this.props.onFocusOnNode(nodeToFocus.nodeId)
+          }
+        }
+      } else {
+        this.setState({pressedLeftTwice:true})
+      }
+    }
+
+    handlePressedRight(currentNode, currentNodeIndex, parent, siblings) {
+      if (this.state.pressedRightTwice) {
+        // focus on right sibling.
+        if (parent) {
+          this.focusRight(currentNodeIndex, parent, siblings);
+        }
+        else { // Root. Focus on right child.
+          let children = currentNode.children;
+          if (children.length >= 1) {
+            let nodeToFocus = children[children.length-1];
+            this.props.onFocusOnNode(nodeToFocus.nodeId)
+          }
+        }
+      } else {
+        this.setState({pressedRightTwice:true})
+      }
+    }
+
     /*
      * Registers a new entered character.
      */
@@ -122,35 +160,26 @@ export default class NodeView extends Component {
         let siblings = parent ? parent.children : [];
         let currentNodeIndex = siblings.indexOf(currentNode);
         let nodeToFocus;
+        var inputBox = document.getElementById(currentNode.nodeId + "/inputBox");
+        let text = inputBox.value;
+        let position = text.slice(0, inputBox.selectionStart).length;
         // if press enter, create a new node.
         if (code === 13) {
             this.addChild();
         }
         if (code === 39) {
-          // focus on right sibling.
-          if (parent) {
-            this.focusRight(currentNodeIndex, parent, siblings);
+          if (position === text.length) {
+            this.handlePressedRight(currentNode, currentNodeIndex, parent, siblings);
           }
-          else { // Root. Focus on right child.
-            let children = currentNode.children;
-            if (children.length >= 1) {
-              let nodeToFocus = children[children.length-1];
-              this.props.onFocusOnNode(nodeToFocus.nodeId)
-            }
-          }
+        } else {
+          this.setState({pressedRightTwice:false})
         }
         if (code === 37) {
-          // focus on left sibling.
-          if (parent) {
-            this.focusLeft(currentNodeIndex, parent, siblings);
+          if (position === 0) {
+            this.handlePressedLeft(currentNode, currentNodeIndex, parent, siblings);
           }
-          else { // Root. Focus on left child.
-            let children = currentNode.children;
-            if (children.length >= 1) {
-              let nodeToFocus = children[0];
-              this.props.onFocusOnNode(nodeToFocus.nodeId)
-            }
-          }
+        } else {
+          this.setState({pressedLeftTwice:false})
         }
         if (code === 38) {
           // focus on parent.
@@ -181,7 +210,6 @@ export default class NodeView extends Component {
             this.setState({pressedDeleteTwice:false})
         }
         // currentNode.text += ev.char;
-        let text = document.getElementById(currentNode.nodeId + "/inputBox").value;
         currentNode.text = text;
         this.setState({
           originalText: text,
